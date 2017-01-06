@@ -20,14 +20,14 @@ site.read
 staged_files = `git diff --cached --name-only --diff-filter=ACM`.split("\n")
 
 runner = Jekyll::PreCommit::Runner.new
-messages = runner.run(site, staged_files)
+result = runner.run(site, staged_files)
 
-if messages.empty?
+if result[:ok]
   exit(0)
 end
 
 puts "There were failed checks 😥"
-messages.each do |c|
+result[:messages].each do |c|
   puts c
 end
 exit(1)
