@@ -17,14 +17,16 @@ site = Jekyll::Site.new(config)
 site.reset
 site.read
 
+staged_files = `git diff --cached --name-only --diff-filter=ACM`.split("\n")
+staged_posts = Array.new
+
 site.posts.docs.each do |p|
-  puts p.path
+  if (staged_files.include? p.path.gsub(Dir.pwd + "/", ""))
+    staged_posts.push(p)
+  end
 end
 
-staged = `git diff --cached --name-only --diff-filter=ACM`.split("\n")
-puts YAML::dump(staged)
-
-puts Dir.pwd
+puts staged_posts.length
 
 site.config["pre-commit"].each do |c|
   i = Object.const_get("Jekyll::PreCommit::Check::" + c).new
