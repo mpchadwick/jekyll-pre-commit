@@ -26,6 +26,11 @@ site.posts.docs.each do |p|
   end
 end
 
+if staged_posts.empty?
+  # If no posts are being committed. Safe to commit.
+  exit(0)
+end
+
 puts staged_posts.length
 
 site.config["pre-commit"].each do |c|
