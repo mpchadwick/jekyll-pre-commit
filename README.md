@@ -5,10 +5,8 @@
 - Init command to add symlink automagically
 - meta_description_is_not_duplicate check
 - meta_description_is_good_length check
-- Rename "meta description" to "description"?
 - Autoload all checks (see Jekyll::PluginManager.require_plugin_files)
 - Documentation
-- Tests
 - Error handling
 - Pull in custom user created checks from _pre-commit directory
 
