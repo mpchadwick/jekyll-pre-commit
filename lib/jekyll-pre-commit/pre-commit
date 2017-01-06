@@ -18,34 +18,16 @@ site.reset
 site.read
 
 staged_files = `git diff --cached --name-only --diff-filter=ACM`.split("\n")
-staged_posts = Array.new
 
-site.posts.docs.each do |p|
-  if (staged_files.include? p.path.gsub(Dir.pwd + "/", ""))
-    staged_posts.push(p)
-  end
-end
+runner = Jekyll::PreCommit::Runner.new
+messages = runner.run(site, staged_files)
 
-if staged_posts.empty?
-  # If no posts are being committed. Safe to commit.
-  exit(0)
-end
-
-failed = Array.new
-site.config["pre-commit"].each do |c|
-  o = Object.const_get("Jekyll::PreCommit::Check::" + c).new
-  result = o.Check(staged_posts, site)
-  if !result[:ok]
-    failed.push(result[:message])
-  end
-end
-
-if failed.empty?
+if messages.empty?
   exit(0)
 end
 
 puts "There were failed checks 😥"
-failed.each do |c|
+messages.each do |c|
   puts c
 end
 exit(1)
