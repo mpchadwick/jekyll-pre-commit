@@ -31,9 +31,17 @@ if staged_posts.empty?
   exit(0)
 end
 
-puts staged_posts.length
-
+failed = Array.new
 site.config["pre-commit"].each do |c|
-  i = Object.const_get("Jekyll::PreCommit::Check::" + c).new
-  puts i.Check
+  o = Object.const_get("Jekyll::PreCommit::Check::" + c).new
+  if !o.Check(staged_posts, site)
+    failed.push(c)
+  end
 end
+
+if failed.empty?
+  exit(0)
+end
+
+puts "There were failed checks :("
+exit(1)
