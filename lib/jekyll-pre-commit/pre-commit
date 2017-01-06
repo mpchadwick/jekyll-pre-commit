@@ -34,8 +34,9 @@ end
 failed = Array.new
 site.config["pre-commit"].each do |c|
   o = Object.const_get("Jekyll::PreCommit::Check::" + c).new
-  if !o.Check(staged_posts, site)
-    failed.push(c)
+  result = o.Check(staged_posts, site)
+  if !result[:ok]
+    failed.push(result[:message])
   end
 end
 
@@ -43,5 +44,8 @@ if failed.empty?
   exit(0)
 end
 
-puts "There were failed checks :("
+puts "There were failed checks 😥"
+failed.each do |c|
+  puts c
+end
 exit(1)

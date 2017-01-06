@@ -3,12 +3,14 @@ module Jekyll
     module Check
       class MetaDescriptionExists
         def Check(staged, site)
+          result = { :ok => true, :message => "" }
           staged.each do |post|
             if !post.data["description"]
-              return false
+              result[:ok] = false
+              result[:message] += post.data["title"] + " was missing a description. "
             end
           end
-          return true
+          return result
         end
       end
     end
