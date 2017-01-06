@@ -13,6 +13,27 @@ RSpec.configure do |config|
     File.join(DEST_DIR, *files)
   end
 
+  # Borrowed from jekyll-paginate
+  def build_configs(overrides, base_hash = Jekyll::Configuration::DEFAULTS)
+    Jekyll::Utils.deep_merge_hashes(base_hash, overrides)
+  end
+
+  def site_configuration(overrides = {})
+    build_configs({
+      "source"      => source_dir,
+      "destination" => dest_dir
+    }, build_configs(overrides))
+  end
+
+  def build_site(config = {})
+    site = Jekyll::Site.new(site_configuration(
+      {}.merge(config)
+    ))
+    site.reset
+    site.read
+    site
+  end
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
