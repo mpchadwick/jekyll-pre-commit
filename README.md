@@ -1,8 +1,14 @@
 # Jekyll::Pre::Commit
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/jekyll/pre/commit`. To experiment with that code, run `bin/console` for an interactive prompt.
+## Todo
 
-TODO: Delete this and the text above, and describe your gem
+- Init command to add symlink automagically
+- meta_description_is_not_duplicate check
+- meta_description_is_good_length check
+- Documentation
+- Tests
+- Error handling
+- Pull in checks from _pre-commit directory
 
 ## Installation
 
