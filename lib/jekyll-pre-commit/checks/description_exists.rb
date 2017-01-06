@@ -1,7 +1,7 @@
 module Jekyll
   module PreCommit
     module Check
-      class MetaDescriptionExists
+      class DescriptionExists
         def Check(staged, site)
           result = { :ok => true, :message => "" }
           staged.each do |post|
