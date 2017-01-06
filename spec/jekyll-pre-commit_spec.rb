@@ -34,7 +34,7 @@ describe(Jekyll::PreCommit::Runner) do
       expect(result[:messages]).to match_array(["No Description was missing a description. "])
     end
 
-    it "doesn't return a message if all staged posts have descriptions" do
+    it "succeeds if all staged posts have descriptions" do
       result = runner.run(site, ["spec/fixtures/_posts/2017-01-06-has-description.md"])
       expect(result[:ok]).to eql(true)
       expect(result[:messages]).to match_array([])
