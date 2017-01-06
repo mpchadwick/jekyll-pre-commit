@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+
+$VERBOSE = nil
+
+require "jekyll"
+
+Jekyll.logger.adjust_verbosity(
+  :quiet => true
+)
+
+Jekyll::PluginManager.require_from_bundler
+
+config = Jekyll.configuration
+config["future"] = true
+
+site = Jekyll::Site.new(config)
+site.reset
+site.read
+
+site.posts.docs.each do |p|
+  puts p.path
+end
+
+staged = `git diff --cached --name-only --diff-filter=ACM`.split("\n")
+puts YAML::dump(staged)
+
+puts Dir.pwd
+
+site.config["pre-commit"].each do |c|
+  i = Object.const_get("Jekyll::PreCommit::Check::" + c).new
+  puts i.Check
+end
