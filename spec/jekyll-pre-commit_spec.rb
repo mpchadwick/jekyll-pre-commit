@@ -6,7 +6,7 @@ describe(Jekyll::PreCommit::Runner) do
   context "with no checks" do
     let(:site) { build_site }
 
-    it "bails with no checks enabled message" do
+    it "succeeds with no checks enabled message" do
       result = runner.run(site, ["spec/fixtures/favicon.ico"])
       expect(result[:ok]).to eql(true)
       expect(result[:messages]).to match_array(["No pre-commit checks enabled"])
@@ -18,8 +18,15 @@ describe(Jekyll::PreCommit::Runner) do
     # Doesn't matter which one
     let(:site) { build_site({ 'pre-commit' => ['DescriptionExists'] }) }
 
-    it "bails with no posts staged message when no posts are staged" do
+    it "succeeds with no posts staged message when no posts are staged" do
       result = runner.run(site, ["spec/fixtures/favicon.ico"])
+      expect(result[:ok]).to eql(true)
+      expect(result[:messages]).to match_array(["No posts staged"])
+    end
+
+    # Drafts are still works in progress, so we don't check them
+    it "succeeds if a draft fails a check" do
+      result = runner.run(site, ["spec/fixtures/_drafts/2017-01-07-draft-with-no-description.md"])
       expect(result[:ok]).to eql(true)
       expect(result[:messages]).to match_array(["No posts staged"])
     end
