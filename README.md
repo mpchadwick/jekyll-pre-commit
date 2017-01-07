@@ -1,35 +1,50 @@
 # jekyll-pre-commit
 
+A plugin to help make sure your post is _really_ ready for publishing.
+
 ## Installation
 
-Add this line to your application's Gemfile:
+Add this line to your `Gemfile`:
 
 ```ruby
-gem 'jekyll-pre-commit'
+group :jekyll_plugins do
+  gem 'jekyll-migrate-permalink'
+end
 ```
 
-And then execute:
+Then execute the `bundle` command to install the gem.
 
-    $ bundle
+Next run `bundle exec jekyll pre-commit init` in the root of your Jekyll site. 
 
-Or install it yourself as:
+This will symlink this plugin's `pre-commit` file to the `.git/hooks/` directory of your project.
 
-    $ gem install jekyll-pre-commit
+If you provide the `--force` flag when running `bundle exec jekyll pre-commit init` any existing `pre-commit` file will be deleted.
 
 ## Usage
 
-TODO: Write usage instructions here
+Once installed you may choose the pre-commit checks you would like to use by listing them in your site's `_config.yml`.
 
-## Development
+```yaml
+pre-commit:
+  - DescriptionExists
+  - DescriptionIsNotDuplicate
+```
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake false` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+## Available Checks
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+#### DescriptionExists
+
+This check ensures that there is a `description` in the front matter of any post that is staged to be committed.
+
+#### DescriptionIsNotDuplicate
+
+This check ensures that the `description` in the front matter of any post that is staged to be committed is unique amongst all the posts on your site.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/jekyll-pre-commit.
+Bug reports and pull requests are welcome on GitHub at https://github.com/mpchadwick/jekyll-pre-commit.
 
+Please ensure tests pass (using rspec) before submitting a pull request and provide test coverage for any new features.
 
 ## License
 
