@@ -26,7 +26,7 @@ describe(Jekyll::PreCommit::Runner) do
   end
 
   context "with description exists check" do
-    let(:site) { build_site({ 'pre-commit' => ['DescriptionExists'] }) }
+    let(:site) { build_site({'pre-commit' => ['DescriptionExists']}) }
 
     it "fails if a staged post is missing a description" do
       result = runner.run(site, ["spec/fixtures/_posts/2017-01-06-no-description.md"])
@@ -35,6 +35,22 @@ describe(Jekyll::PreCommit::Runner) do
     end
 
     it "succeeds if all staged posts have descriptions" do
+      result = runner.run(site, ["spec/fixtures/_posts/2017-01-06-has-description.md"])
+      expect(result[:ok]).to eql(true)
+      expect(result[:messages]).to match_array([])
+    end
+  end
+
+  context "with description is not duplicate check" do
+    let(:site) { build_site({'pre-commit' => ['DescriptionIsNotDuplicate']}) }
+
+    it "fails if a staged post has a duplicate description" do
+      result = runner.run(site, ["spec/fixtures/_posts/2017-01-06-duplicate-description-a.md"])
+      expect(result[:ok]).to eql(false)
+      expect(result[:messages]).to match_array(["Duplicate Description A's description was already used. "])
+    end
+
+    it "succeeds if a staged post has a unique description" do
       result = runner.run(site, ["spec/fixtures/_posts/2017-01-06-has-description.md"])
       expect(result[:ok]).to eql(true)
       expect(result[:messages]).to match_array([])
