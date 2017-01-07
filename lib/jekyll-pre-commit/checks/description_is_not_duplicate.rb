@@ -1,10 +1,8 @@
 module Jekyll
   module PreCommit
     module Check
-      class DescriptionIsNotDuplicate
+      class DescriptionIsNotDuplicate < Check
         def Check(staged, not_staged, site)
-          result = { :ok => true, :message => "" }
-
           existing = Array.new
           not_staged.each do |post|
             if post.data["description"]
@@ -14,11 +12,12 @@ module Jekyll
 
           staged.each do |post|
             if (existing.include? post.data["description"])
-              result[:ok] = false
-              result[:message] += post.data["title"] + "'s description was already used. "
+              @result[:ok] = false
+              @result[:message] += post.data["title"] + "'s description was already used. "
             end
           end
-          return result
+
+          @result
         end
       end
     end
