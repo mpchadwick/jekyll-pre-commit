@@ -28,6 +28,7 @@ Once installed you may choose the pre-commit checks you would like to use by lis
 pre-commit:
   - DescriptionExists
   - DescriptionIsNotDuplicate
+  - DescriptionIsGoodLength
 ```
 
 ## Available Checks
