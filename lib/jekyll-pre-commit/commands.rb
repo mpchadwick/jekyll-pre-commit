@@ -3,8 +3,8 @@ module Jekyll
     class PreCommit < Command
       class << self
         def init_with_program(prog)
-          prog.command(:precommit) do |c|
-            c.syntax 'precommit SUBCOMMAND'
+          prog.command(:"pre-commit") do |c|
+            c.syntax 'pre-commit SUBCOMMAND'
             c.description 'Runs SUBCOMMAND'
             c.option "force", "--force", "Overwrites an existing pre-commit if one already exists"
 
