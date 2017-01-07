@@ -14,11 +14,11 @@ describe(Jekyll::PreCommit::Runner) do
 
   end
 
-  context "with any check and no posts staged" do
+  context "with any check" do
     # Doesn't matter which one
     let(:site) { build_site({ 'pre-commit' => ['DescriptionExists'] }) }
 
-    it "bails with no posts staged message" do
+    it "bails with no posts staged message when no posts are staged" do
       result = runner.run(site, ["spec/fixtures/favicon.ico"])
       expect(result[:ok]).to eql(true)
       expect(result[:messages]).to match_array(["No posts staged"])

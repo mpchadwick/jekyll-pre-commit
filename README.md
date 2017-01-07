@@ -3,7 +3,6 @@
 ## Todo
 
 - Init command to add symlink automagically
-- meta_description_is_not_duplicate check
 - meta_description_is_good_length check
 - Autoload all checks (see Jekyll::PluginManager.require_plugin_files)
 - Documentation
