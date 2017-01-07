@@ -1,14 +1,5 @@
 # jekyll-pre-commit
 
-## Todo
-
-- Init command to add symlink automagically
-- meta_description_is_good_length check
-- Autoload all checks (see Jekyll::PluginManager.require_plugin_files)
-- Documentation
-- Error handling
-- Pull in custom user created checks from _pre-commit directory
-
 ## Installation
 
 Add this line to your application's Gemfile:
