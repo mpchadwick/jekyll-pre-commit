@@ -50,8 +50,30 @@ describe(Jekyll::PreCommit::Runner) do
       expect(result[:messages]).to match_array(["Duplicate Description A's description was already used. "])
     end
 
-    it "succeeds if a staged post has a unique description" do
+    it "succeeds if all staged posts have a unique description" do
       result = runner.run(site, ["spec/fixtures/_posts/2017-01-06-has-description.md"])
+      expect(result[:ok]).to eql(true)
+      expect(result[:messages]).to match_array([])
+    end
+  end
+
+  context "with description is good length check" do
+    let(:site) { build_site({'pre-commit' => ['DescriptionIsGoodLength']}) }
+
+    it "fails if a staged post has a description that's too long" do
+      result = runner.run(site, ["spec/fixtures/_posts/2017-01-06-description-is-too-long.md"])
+      expect(result[:ok]).to eql(false)
+      expect(result[:messages]).to match_array(["Long Ass Description's description is too long. "])
+    end
+
+    it "fails if a staged post has a description that's too short" do
+      result = runner.run(site, ["spec/fixtures/_posts/2017-01-06-description-is-too-short.md"])
+      expect(result[:ok]).to eql(false)
+      expect(result[:messages]).to match_array(["Short Description's description is too short. "])
+    end
+
+    it "passes if all staged posts have descriptions that are a good length " do
+      result = runner.run(site, ["spec/fixtures/_posts/2017-01-06-description-is-good-length.md"])
       expect(result[:ok]).to eql(true)
       expect(result[:messages]).to match_array([])
     end

@@ -40,6 +40,10 @@ This check ensures that there is a `description` in the front matter of any post
 
 This check ensures that the `description` in the front matter of any post that is staged to be committed is unique amongst all the posts on your site.
 
+#### DescriptionIsGoodLength
+
+This check ensures that the `description` in the front matter of any post that is staged to be commited is a [good length](https://moz.com/learn/seo/meta-description). Specifically it checks that the description is between 145 and 165 characters.
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/mpchadwick/jekyll-pre-commit.
