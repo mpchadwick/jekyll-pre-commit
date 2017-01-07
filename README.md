@@ -1,6 +1,6 @@
 # jekyll-pre-commit
 
-A plugin to help make sure your post is _really_ ready for publishing.
+A Jekyll plugin to make sure your post is _really_ ready for publishing.
 
 ## Installation
 
