@@ -32,8 +32,7 @@ module Jekyll
             o = Object.const_get("Jekyll::PreCommit::Check::" + c["check"]).new
           rescue
             result[:ok] = false
-            # Skip any other messages so the user focuses on this.
-            result[:message] = ["The check #{c["check"]} does not exist! Please fix your configuration."]
+            result[:messages].push("The check #{c["check"]} does not exist! Please fix your configuration.")
             break
           end
           r = o.Check(staged_posts, not_staged_posts, site, c)

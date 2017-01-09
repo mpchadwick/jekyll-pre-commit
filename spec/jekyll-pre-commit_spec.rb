@@ -130,7 +130,24 @@ describe(Jekyll::PreCommit::Runner) do
     it "fails with non-existent check message" do
       result = runner.run(site, ["spec/fixtures/_posts/2017-01-06-no-description.md"])
       expect(result[:ok]).to eql(false)
-      expect(result[:message]).to match_array(["The check Garbage does not exist! Please fix your configuration."])
+      expect(result[:messages]).to match_array(["The check Garbage does not exist! Please fix your configuration."])
+    end
+  end
+
+  context "with a check that doesn't exist and a check that does" do
+    pre_commit_config = [
+      {"check" => "FrontMatterPropertyExists", "properties" => ["description"]},
+      {"check" => "Garbage"}
+    ]
+    let(:site) { build_site({ 'pre-commit' => pre_commit_config }) }
+
+    it "fails and shows non-existent check message along with other failure messages" do
+      result = runner.run(site, ["spec/fixtures/_posts/2017-01-06-no-description.md"])
+      expect(result[:ok]).to eql(false)
+      expect(result[:messages]).to match_array([
+        "No Description was missing a description. ",
+        "The check Garbage does not exist! Please fix your configuration."
+      ])
     end
   end
 end
