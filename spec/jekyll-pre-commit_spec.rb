@@ -122,4 +122,15 @@ describe(Jekyll::PreCommit::Runner) do
       expect(result[:messages]).to match_array([])
     end
   end
+
+  context "with a check that doesn't exist" do
+    pre_commit_config = {"check" => "Garbage"}
+    let(:site) { build_site({ 'pre-commit' => [pre_commit_config] }) }
+
+    it "fails with non-existent check message" do
+      result = runner.run(site, ["spec/fixtures/_posts/2017-01-06-no-description.md"])
+      expect(result[:ok]).to eql(false)
+      expect(result[:message]).to match_array(["The check Garbage does not exist! Please fix your configuration."])
+    end
+  end
 end
