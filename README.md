@@ -34,9 +34,9 @@ pre-commit:
 
 ## Available Checks
 
-#### DescriptionExists
+#### FrontMatterPropertyExists
 
-This check ensures that there is a `description` in the front matter of any post that is staged to be committed.
+This check ensures that there is any listed properties exist in the front matter of any post that is staged to be committed.
 
 #### DescriptionIsNotDuplicate
 
