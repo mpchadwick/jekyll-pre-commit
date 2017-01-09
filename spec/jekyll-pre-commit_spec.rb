@@ -85,8 +85,9 @@ describe(Jekyll::PreCommit::Runner) do
     end
   end
 
-  context "with description is not duplicate check" do
-    let(:site) { build_site({'pre-commit' => [{"check" => "DescriptionIsNotDuplicate"}]}) }
+  context "with FrontMatterPropertyIsNotDuplicate checking only description" do
+    pre_commit_config = {"check" => "FrontMatterPropertyIsNotDuplicate", "properties" => ["description"]}
+    let(:site) { build_site({ 'pre-commit' => [pre_commit_config] }) }
 
     it "fails if a staged post has a duplicate description" do
       result = runner.run(site, ["spec/fixtures/_posts/2017-01-06-duplicate-description-a.md"])
@@ -96,6 +97,40 @@ describe(Jekyll::PreCommit::Runner) do
 
     it "succeeds if all staged posts have a unique description" do
       result = runner.run(site, ["spec/fixtures/_posts/2017-01-06-has-description.md"])
+      expect(result[:ok]).to eql(true)
+      expect(result[:messages]).to match_array([])
+    end
+  end
+
+  context "with FrontMatterPropertyIsNotDuplicate not checking any properties" do
+    pre_commit_config = {"check" => "FrontMatterPropertyIsNotDuplicate"}
+    let(:site) { build_site({ 'pre-commit' => [pre_commit_config] }) }
+
+    it "succeeds with no properties to check message" do
+      result = runner.run(site, ["spec/fixtures/_posts/2017-01-06-no-description.md"])
+      expect(result[:ok]).to eql(true)
+      expect(result[:messages]).to match_array(["No properties to check."])
+    end
+  end
+
+  context "with FrontMatterPropertyIsNotDuplicate checking description and image" do
+    pre_commit_config = {"check" => "FrontMatterPropertyIsNotDuplicate", "properties" => ["description", "image"]}
+    let(:site) { build_site({ 'pre-commit' => [pre_commit_config] }) }
+
+    it "fails if a staged post has a unique image, but duplicate description" do
+      result = runner.run(site, ["spec/fixtures/_posts/2017-01-09-unique-image-duplicate-description.md"])
+      expect(result[:ok]).to eql(false)
+      expect(result[:messages]).to match_array(["Unique Image Duplicate Description's description was already used. "])
+    end
+
+    it "fails if a staged post has a duplicate image and duplicate description" do
+      result = runner.run(site, ["spec/fixtures/_posts/2017-01-09-duplicate-image-duplicate-description-b.md"])
+      expect(result[:ok]).to eql(false)
+      expect(result[:messages]).to match_array(["Duplicate Image Duplicate Description B's description was already used. Duplicate Image Duplicate Description B's image was already used. "])
+    end
+
+    it "succeeds if all staged posts have unique images and unique descriptions" do
+      result = runner.run(site, ["spec/fixtures/_posts/2017-01-09-unique-image-unique-description.md"])
       expect(result[:ok]).to eql(true)
       expect(result[:messages]).to match_array([])
     end

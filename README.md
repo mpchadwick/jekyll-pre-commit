@@ -28,7 +28,8 @@ Once installed you may choose the pre-commit checks you would like to use by lis
 pre-commit:
   - check: FrontMatterPropertyExists
     properties: ['description', 'image']
-  - check: DescriptionIsNotDuplicate
+  - check: FrontMatterPropertyIsNotDuplicate
+    properties: ['description']
   - check: DescriptionIsGoodLength
 ```
 
@@ -36,11 +37,11 @@ pre-commit:
 
 #### FrontMatterPropertyExists
 
-This check ensures that there is any listed properties exist in the front matter of any post that is staged to be committed.
+This check ensures that any listed properties exist in the front matter of any post that is staged to be committed.
 
-#### DescriptionIsNotDuplicate
+#### FrontMatterPropertyIsNotDuplicate
 
-This check ensures that the `description` in the front matter of any post that is staged to be committed is unique amongst all the posts on your site.
+This check ensures that any listed properties in the front matter of any post that is staged to be committed are unique amongst all the posts on your site.
 
 #### DescriptionIsGoodLength
 
