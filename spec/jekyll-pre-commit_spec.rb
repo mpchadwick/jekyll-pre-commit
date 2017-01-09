@@ -33,7 +33,7 @@ describe(Jekyll::PreCommit::Runner) do
     end
   end
 
-  context "with FrontMatterPropertyExists check only checking that description exists" do
+  context "with FrontMatterPropertyExists check only checking description" do
     pre_commit_config = {"check" => "FrontMatterPropertyExists", "properties" => ["description"]}
     let(:site) { build_site({ 'pre-commit' => [pre_commit_config] }) }
 
@@ -58,6 +58,30 @@ describe(Jekyll::PreCommit::Runner) do
       result = runner.run(site, ["spec/fixtures/_posts/2017-01-06-no-description.md"])
       expect(result[:ok]).to eql(true)
       expect(result[:messages]).to match_array(["No properties to check."])
+    end
+  end
+
+  context "with FrontMatterPropertyExistsCheck checking description and image" do
+    pre_commit_config = {"check" => "FrontMatterPropertyExists", "properties" => ["description", "image"]}
+    let(:site) { build_site({ 'pre-commit' => [pre_commit_config] }) }
+
+    it "fails if a staged post has a description, but no image" do
+      result = runner.run(site, ["spec/fixtures/_posts/2017-01-06-has-description.md"])
+      expect(result[:ok]).to eql(false)
+      expect(result[:messages]).to match_array(["Has Description was missing a image. "])
+    end
+
+    it "fails if a staged post is missing a description and an image" do
+      result = runner.run(site, ["spec/fixtures/_posts/2017-01-06-no-description.md"])
+      expect(result[:ok]).to eql(false)
+      message = "No Description was missing a description. No Description was missing a image. "
+      expect(result[:messages]).to match_array([message])
+    end
+
+    it "succeeds if all staged posts have descriptions and images" do
+      result = runner.run(site, ["spec/fixtures/_posts/2017-01-07-has-description-and-image.md"])
+      expect(result[:ok]).to eql(true)
+      expect(result[:messages]).to match_array([])
     end
   end
 
