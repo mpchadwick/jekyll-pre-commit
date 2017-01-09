@@ -26,9 +26,9 @@ Once installed you may choose the pre-commit checks you would like to use by lis
 
 ```yaml
 pre-commit:
-  - DescriptionExists
-  - DescriptionIsNotDuplicate
-  - DescriptionIsGoodLength
+  - check: DescriptionExists
+  - check: DescriptionIsNotDuplicate
+  - check: DescriptionIsGoodLength
 ```
 
 ## Available Checks

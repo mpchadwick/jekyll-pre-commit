@@ -2,7 +2,7 @@ module Jekyll
   module PreCommit
     module Check
       class DescriptionExists < Check
-        def Check(staged, not_staged, site)
+        def Check(staged, not_staged, site, args)
           staged.each do |post|
             if !post.data["description"]
               @result[:ok] = false

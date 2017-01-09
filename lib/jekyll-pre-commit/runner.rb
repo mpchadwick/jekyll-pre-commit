@@ -28,8 +28,8 @@ module Jekyll
         end
 
         site.config["pre-commit"].each do |c|
-          o = Object.const_get("Jekyll::PreCommit::Check::" + c).new
-          r = o.Check(staged_posts, not_staged_posts, site)
+          o = Object.const_get("Jekyll::PreCommit::Check::" + c["check"]).new
+          r = o.Check(staged_posts, not_staged_posts, site, c)
           if !r[:ok]
             result[:ok] = false
             result[:messages].push(r[:message])

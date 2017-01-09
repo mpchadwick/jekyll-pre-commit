@@ -2,7 +2,7 @@ module Jekyll
   module PreCommit
     module Check
       class DescriptionIsNotDuplicate < Check
-        def Check(staged, not_staged, site)
+        def Check(staged, not_staged, site, args)
           existing = Array.new
           not_staged.each do |post|
             if post.data["description"]

@@ -16,7 +16,7 @@ describe(Jekyll::PreCommit::Runner) do
 
   context "with any check" do
     # Doesn't matter which one
-    let(:site) { build_site({ 'pre-commit' => ['DescriptionExists'] }) }
+    let(:site) { build_site({ 'pre-commit' => [{"check" => "DescriptionExists"}] }) }
 
     it "succeeds with no posts staged message when no posts are staged" do
       result = runner.run(site, ["spec/fixtures/favicon.ico"])
@@ -33,7 +33,7 @@ describe(Jekyll::PreCommit::Runner) do
   end
 
   context "with description exists check" do
-    let(:site) { build_site({'pre-commit' => ['DescriptionExists']}) }
+    let(:site) { build_site({'pre-commit' => [{"check" => "DescriptionExists"}]}) }
 
     it "fails if a staged post is missing a description" do
       result = runner.run(site, ["spec/fixtures/_posts/2017-01-06-no-description.md"])
@@ -49,7 +49,7 @@ describe(Jekyll::PreCommit::Runner) do
   end
 
   context "with description is not duplicate check" do
-    let(:site) { build_site({'pre-commit' => ['DescriptionIsNotDuplicate']}) }
+    let(:site) { build_site({'pre-commit' => [{"check" => "DescriptionIsNotDuplicate"}]}) }
 
     it "fails if a staged post has a duplicate description" do
       result = runner.run(site, ["spec/fixtures/_posts/2017-01-06-duplicate-description-a.md"])
@@ -65,7 +65,7 @@ describe(Jekyll::PreCommit::Runner) do
   end
 
   context "with description is good length check" do
-    let(:site) { build_site({'pre-commit' => ['DescriptionIsGoodLength']}) }
+    let(:site) { build_site({'pre-commit' => [{"check" => "DescriptionIsGoodLength"}]}) }
 
     it "fails if a staged post has a description that's too long" do
       result = runner.run(site, ["spec/fixtures/_posts/2017-01-06-description-is-too-long.md"])
