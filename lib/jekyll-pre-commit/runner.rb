@@ -32,6 +32,8 @@ module Jekyll
           r = o.Check(staged_posts, not_staged_posts, site, c)
           if !r[:ok]
             result[:ok] = false
+          end
+          if r[:message] != ""
             result[:messages].push(r[:message])
           end
         end

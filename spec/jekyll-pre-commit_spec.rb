@@ -50,6 +50,17 @@ describe(Jekyll::PreCommit::Runner) do
     end
   end
 
+  context "with FrontMatterPropertyExistsCheck not checking any properties" do
+    pre_commit_config = {"check" => "FrontMatterPropertyExists"}
+    let(:site) { build_site({ 'pre-commit' => [pre_commit_config] }) }
+
+    it "succeeds with no properties to check message" do
+      result = runner.run(site, ["spec/fixtures/_posts/2017-01-06-no-description.md"])
+      expect(result[:ok]).to eql(true)
+      expect(result[:messages]).to match_array(["No properties to check."])
+    end
+  end
+
   context "with description is not duplicate check" do
     let(:site) { build_site({'pre-commit' => [{"check" => "DescriptionIsNotDuplicate"}]}) }
 
