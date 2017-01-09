@@ -16,7 +16,8 @@ describe(Jekyll::PreCommit::Runner) do
 
   context "with any check" do
     # Doesn't matter which one
-    let(:site) { build_site({ 'pre-commit' => [{"check" => "DescriptionExists"}] }) }
+    pre_commit_config = {"check" => "FrontMatterPropertyExists", "properties" => ["description"]}
+    let(:site) { build_site({ 'pre-commit' => [pre_commit_config] }) }
 
     it "succeeds with no posts staged message when no posts are staged" do
       result = runner.run(site, ["spec/fixtures/favicon.ico"])
@@ -32,8 +33,9 @@ describe(Jekyll::PreCommit::Runner) do
     end
   end
 
-  context "with description exists check" do
-    let(:site) { build_site({'pre-commit' => [{"check" => "DescriptionExists"}]}) }
+  context "with FrontMatterPropertyExists check only checking that description exists" do
+    pre_commit_config = {"check" => "FrontMatterPropertyExists", "properties" => ["description"]}
+    let(:site) { build_site({ 'pre-commit' => [pre_commit_config] }) }
 
     it "fails if a staged post is missing a description" do
       result = runner.run(site, ["spec/fixtures/_posts/2017-01-06-no-description.md"])

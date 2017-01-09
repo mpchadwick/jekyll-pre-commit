@@ -26,7 +26,8 @@ Once installed you may choose the pre-commit checks you would like to use by lis
 
 ```yaml
 pre-commit:
-  - check: DescriptionExists
+  - check: FrontMatterPropertyExists
+    properties: ['description', 'image']
   - check: DescriptionIsNotDuplicate
   - check: DescriptionIsGoodLength
 ```
