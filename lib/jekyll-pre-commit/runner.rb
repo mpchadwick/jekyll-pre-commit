@@ -35,7 +35,7 @@ module Jekyll
             result[:messages].push("The check #{c["check"]} does not exist! Please fix your configuration.")
             break
           end
-          r = o.Check(staged_posts, not_staged_posts, site, c)
+          r = o.check(staged_posts, not_staged_posts, site, c)
           if !r[:ok]
             result[:ok] = false
           end

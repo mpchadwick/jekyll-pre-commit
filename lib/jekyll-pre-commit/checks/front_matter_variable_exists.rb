@@ -2,7 +2,7 @@ module Jekyll
   module PreCommit
     module Check
       class FrontMatterVariableExists < Check
-        def Check(staged, not_staged, site, args)
+        def check(staged, not_staged, site, args)
           if !args["variables"]
             @result[:message] += "No variables to check."
             return @result

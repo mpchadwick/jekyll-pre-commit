@@ -30,22 +30,47 @@ pre-commit:
     variables: ['description', 'image']
   - check: FrontMatterVariableIsNotDuplicate
     variables: ['description']
-  - check: DescriptionIsGoodLength
+  - check: FrontMatterVariableMeetsLengthRequirements
+    variables: ['description', 'title']
 ```
 
 ## Available Checks
 
 #### FrontMatterVariableExists
 
-This check ensures that any variable properties exist in the front matter of any post that is staged to be committed.
+This check ensures that any listed variables exist in the front matter of any post that is staged to be committed.
 
 #### FrontMatterVariableIsNotDuplicate
 
 This check ensures that any listed variable in the front matter of any post that is staged to be committed are unique amongst all the posts on your site.
 
-#### DescriptionIsGoodLength
+#### FrontMatterVariableMeetsLengthRequirements
 
-This check ensures that the `description` in the front matter of any post that is staged to be commited is a [good length](https://moz.com/learn/seo/meta-description). Specifically it checks that the description is between 145 and 165 characters.
+This check ensures that any listed variable in the front matter of any post that is staged to be committed meet the length requirements (in number of characters).
+
+This check includes the following defaults:
+
+**title**
+
+- max: 59
+
+**description**
+
+- min: 145
+- max: 165
+
+These can be overridden, or requirements can be specified for other variables in the following format...
+
+- `variable|min|max`
+
+For example...
+
+```yaml
+- check: FrontMatterVariableMeetsLengthRequirements
+  variables: ['title||50']
+```
+
+In the above, there would be a maximum length of 50 characters for the title (rather than the default of 59)
 
 ## Contributing
 

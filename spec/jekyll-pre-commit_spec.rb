@@ -136,8 +136,9 @@ describe(Jekyll::PreCommit::Runner) do
     end
   end
 
-  context "with description is good length check" do
-    let(:site) { build_site({'pre-commit' => [{"check" => "DescriptionIsGoodLength"}]}) }
+  context "with FrontMatterVariableMeetsLengthRequirements checking description with default length settings" do
+    pre_commit_config = {"check" => "FrontMatterVariableMeetsLengthRequirements", "variables" => ["description"]}
+    let(:site) { build_site({ 'pre-commit' => [pre_commit_config] }) }
 
     it "fails if a staged post has a description that's too long" do
       result = runner.run(site, ["spec/fixtures/_posts/2017-01-06-description-is-too-long.md"])
@@ -155,6 +156,29 @@ describe(Jekyll::PreCommit::Runner) do
       result = runner.run(site, ["spec/fixtures/_posts/2017-01-06-description-is-good-length.md"])
       expect(result[:ok]).to eql(true)
       expect(result[:messages]).to match_array([])
+    end
+  end
+
+  context "with FrontMatterVariableMeetsLengthReqirements checking description with custom length settings" do
+    pre_commit_config = {"check" => "FrontMatterVariableMeetsLengthRequirements", "variables" => ["description||200"]}
+    let(:site) { build_site({ 'pre-commit' => [pre_commit_config] }) }
+
+    it "passes if a staged post is doesn't meet default requirements, but meets custom requirements" do
+      result = runner.run(site, ["spec/fixtures/_posts/2017-01-06-description-is-too-long.md"])
+      expect(result[:ok]).to eql(true)
+      expect(result[:messages]).to match_array([])
+    end
+
+    it "passes if a staged post is doesn't meet default requirements, but meets custom requirements - #2" do
+      result = runner.run(site, ["spec/fixtures/_posts/2017-01-06-description-is-too-short.md"])
+      expect(result[:ok]).to eql(true)
+      expect(result[:messages]).to match_array([])
+    end
+
+    it "fails if a staged post doesn't meet custom length requirements" do
+      result = runner.run(site, ["spec/fixtures/_posts/2017-01-09-description-is-too-long-for-custom-length-requirements.md"])
+      expect(result[:ok]).to eql(false)
+      expect(result[:messages]).to match_array(["description-is-too-long-for-custom-length-requirements's description is too long. "])
     end
   end
 
