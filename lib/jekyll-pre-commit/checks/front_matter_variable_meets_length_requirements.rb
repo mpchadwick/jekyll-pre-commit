@@ -1,6 +1,6 @@
 module Jekyll
   module PreCommit
-    module Check
+    module Checks
       class FrontMatterVariableMeetsLengthRequirements < Check
 
         DEFAULT_LENGTH_REQUIREMENTS = {

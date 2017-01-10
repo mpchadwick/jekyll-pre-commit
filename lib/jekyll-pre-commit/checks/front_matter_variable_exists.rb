@@ -1,6 +1,6 @@
 module Jekyll
   module PreCommit
-    module Check
+    module Checks
       class FrontMatterVariableExists < Check
         def check(staged, not_staged, site, args)
           if !args["variables"]

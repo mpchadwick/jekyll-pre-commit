@@ -29,7 +29,7 @@ module Jekyll
 
         site.config["pre-commit"].each do |c|
           begin
-            o = Object.const_get("Jekyll::PreCommit::Check::" + c["check"]).new
+            o = Object.const_get("Jekyll::PreCommit::Checks::" + c["check"]).new
           rescue
             result[:ok] = false
             result[:messages].push("The check #{c["check"]} does not exist! Please fix your configuration.")

@@ -1,6 +1,6 @@
 module Jekyll
   module PreCommit
-    module Check
+    module Checks
       class Check
         def initialize
           @result = { :ok => true, :message => "" }

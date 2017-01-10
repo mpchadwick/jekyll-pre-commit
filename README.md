@@ -76,14 +76,14 @@ In the above, there would be a maximum length of 50 characters for the title (ra
 
 ## Roll Your Own
 
-You can also add your own checks. To do so, create a class in the `Jekyll::PreCommit::Check` module and and define a `check` method. Your class should extend the `Jekyll::PreCommit::Check::Check` class and return the `@result` instance variable. 
+You can also add your own checks. To do so, create a class in the `Jekyll::PreCommit::Checks` module and and define a `check` method. Your class should extend the `Jekyll::PreCommit::Checks::Check` class and return the `@result` instance variable. 
 
 For example...
 
 ```ruby
 module Jekyll
   module PreCommit
-    module Check
+    module Checks
       class DoesNothing < Check
         def check(staged, not_staged, site, args)
           @result
