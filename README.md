@@ -44,11 +44,11 @@ This check ensures that any listed variables exist in the front matter of any po
 
 #### FrontMatterVariableIsNotDuplicate
 
-This check ensures that any listed variable in the front matter of any post that is staged to be committed are unique amongst all the posts on your site.
+This check ensures that any listed variables are unique amongst all the posts on your site in the front matter of any post that is staged to be committed.
 
 #### FrontMatterVariableMeetsLengthRequirements
 
-This check ensures that any listed variable in the front matter of any post that is staged to be committed meet the length requirements (in number of characters).
+This check ensures that any listed variables meet the length requirements (in number of characters) in the front matter of any post that is staged to be committed.
 
 This check includes the following defaults:
 
@@ -73,6 +73,35 @@ For example...
 ```
 
 In the above, there would be a maximum length of 50 characters for the title (rather than the default of 59)
+
+## Roll Your Own
+
+You can also add your own checks. To do so, create a class in the `Jekyll::PreCommit::Check` module and and define a `check` method. Your class should extend the `Jekyll::PreCommit::Check::Check` class and return the `@result` instance variable. 
+
+For example...
+
+```ruby
+module Jekyll
+  module PreCommit
+    module Check
+      class DoesNothing < Check
+        def check(staged, not_staged, site, args)
+          @result
+        end
+      end
+    end
+  end
+end
+```
+
+Put this file in your plugins_path (which is _plugins by default) and `jekyll-pre-commit` will load it automatically. Then just specify that you'd like to run this check in your front matter.
+
+```yaml
+pre-commit:
+  - check: DoesNothing
+```
+
+As you can probably tell by the name, this check doesn't actually do anything. Review the checks in `lib/jekyll-pre-commit/checks` for some more useful examples.
 
 ## Contributing
 

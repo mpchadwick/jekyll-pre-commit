@@ -209,4 +209,15 @@ describe(Jekyll::PreCommit::Runner) do
       ])
     end
   end
+
+  context "with a custom check" do
+    pre_commit_config = {"check" => "CustomCheck"}
+    let(:site) { build_site({ 'pre-commit' => [pre_commit_config] }) }
+
+    it "is able to instantiate the custom check" do
+      result = runner.run(site, ["spec/fixtures/_posts/2017-01-06-has-description.md"])
+      expect(result[:ok]).to eql(true)
+      expect(result[:messages]).to match_array(["I was created."])
+    end
+  end
 end
