@@ -2,6 +2,8 @@
 
 A Jekyll plugin to make sure your post is _really_ ready for publishing.
 
+![Terminal showing failed check](http://i.imgur.com/9PzDMiB.jpg)
+
 ## Installation
 
 Add this line to your `Gemfile`:
