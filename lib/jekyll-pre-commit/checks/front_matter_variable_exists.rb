@@ -1,18 +1,18 @@
 module Jekyll
   module PreCommit
     module Check
-      class FrontMatterPropertyExists < Check
+      class FrontMatterVariableExists < Check
         def Check(staged, not_staged, site, args)
-          if !args["properties"]
-            @result[:message] += "No properties to check."
+          if !args["variables"]
+            @result[:message] += "No variables to check."
             return @result
           end
 
           staged.each do |post|
-            args["properties"].each do |property|
-              if !post.data[property]
+            args["variables"].each do |variable|
+              if !post.data[variable]
                 @result[:ok] = false
-                @result[:message] += "#{post.data["title"]} was missing a #{property}. "
+                @result[:message] += "#{post.data["title"]} was missing a #{variable}. "
               end
             end
           end

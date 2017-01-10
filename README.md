@@ -26,22 +26,22 @@ Once installed you may choose the pre-commit checks you would like to use by lis
 
 ```yaml
 pre-commit:
-  - check: FrontMatterPropertyExists
-    properties: ['description', 'image']
-  - check: FrontMatterPropertyIsNotDuplicate
-    properties: ['description']
+  - check: FrontMatterVariableExists
+    variables: ['description', 'image']
+  - check: FrontMatterVariableIsNotDuplicate
+    variables: ['description']
   - check: DescriptionIsGoodLength
 ```
 
 ## Available Checks
 
-#### FrontMatterPropertyExists
+#### FrontMatterVariableExists
 
-This check ensures that any listed properties exist in the front matter of any post that is staged to be committed.
+This check ensures that any variable properties exist in the front matter of any post that is staged to be committed.
 
-#### FrontMatterPropertyIsNotDuplicate
+#### FrontMatterVariableIsNotDuplicate
 
-This check ensures that any listed properties in the front matter of any post that is staged to be committed are unique amongst all the posts on your site.
+This check ensures that any listed variable in the front matter of any post that is staged to be committed are unique amongst all the posts on your site.
 
 #### DescriptionIsGoodLength
 

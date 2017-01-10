@@ -16,7 +16,7 @@ describe(Jekyll::PreCommit::Runner) do
 
   context "with any check" do
     # Doesn't matter which one
-    pre_commit_config = {"check" => "FrontMatterPropertyExists", "properties" => ["description"]}
+    pre_commit_config = {"check" => "FrontMatterVariableExists", "variables" => ["description"]}
     let(:site) { build_site({ 'pre-commit' => [pre_commit_config] }) }
 
     it "succeeds with no posts staged message when no posts are staged" do
@@ -33,8 +33,8 @@ describe(Jekyll::PreCommit::Runner) do
     end
   end
 
-  context "with FrontMatterPropertyExists check only checking description" do
-    pre_commit_config = {"check" => "FrontMatterPropertyExists", "properties" => ["description"]}
+  context "with FrontMatterVariableExists check only checking description" do
+    pre_commit_config = {"check" => "FrontMatterVariableExists", "variables" => ["description"]}
     let(:site) { build_site({ 'pre-commit' => [pre_commit_config] }) }
 
     it "fails if a staged post is missing a description" do
@@ -50,19 +50,19 @@ describe(Jekyll::PreCommit::Runner) do
     end
   end
 
-  context "with FrontMatterPropertyExistsCheck not checking any properties" do
-    pre_commit_config = {"check" => "FrontMatterPropertyExists"}
+  context "with FrontMatterVariableExists check not checking any variables" do
+    pre_commit_config = {"check" => "FrontMatterVariableExists"}
     let(:site) { build_site({ 'pre-commit' => [pre_commit_config] }) }
 
     it "succeeds with no properties to check message" do
       result = runner.run(site, ["spec/fixtures/_posts/2017-01-06-no-description.md"])
       expect(result[:ok]).to eql(true)
-      expect(result[:messages]).to match_array(["No properties to check."])
+      expect(result[:messages]).to match_array(["No variables to check."])
     end
   end
 
-  context "with FrontMatterPropertyExistsCheck checking description and image" do
-    pre_commit_config = {"check" => "FrontMatterPropertyExists", "properties" => ["description", "image"]}
+  context "with FrontMatterVariableExists check checking description and image" do
+    pre_commit_config = {"check" => "FrontMatterVariableExists", "variables" => ["description", "image"]}
     let(:site) { build_site({ 'pre-commit' => [pre_commit_config] }) }
 
     it "fails if a staged post has a description, but no image" do
@@ -85,8 +85,8 @@ describe(Jekyll::PreCommit::Runner) do
     end
   end
 
-  context "with FrontMatterPropertyIsNotDuplicate checking only description" do
-    pre_commit_config = {"check" => "FrontMatterPropertyIsNotDuplicate", "properties" => ["description"]}
+  context "with FrontMatterVariablesIsNotDuplicate checking only description" do
+    pre_commit_config = {"check" => "FrontMatterVariableIsNotDuplicate", "variables" => ["description"]}
     let(:site) { build_site({ 'pre-commit' => [pre_commit_config] }) }
 
     it "fails if a staged post has a duplicate description" do
@@ -102,19 +102,19 @@ describe(Jekyll::PreCommit::Runner) do
     end
   end
 
-  context "with FrontMatterPropertyIsNotDuplicate not checking any properties" do
-    pre_commit_config = {"check" => "FrontMatterPropertyIsNotDuplicate"}
+  context "with FrontMatterVariableIsNotDuplicate not checking any variables" do
+    pre_commit_config = {"check" => "FrontMatterVariableIsNotDuplicate"}
     let(:site) { build_site({ 'pre-commit' => [pre_commit_config] }) }
 
-    it "succeeds with no properties to check message" do
+    it "succeeds with no variables to check message" do
       result = runner.run(site, ["spec/fixtures/_posts/2017-01-06-no-description.md"])
       expect(result[:ok]).to eql(true)
-      expect(result[:messages]).to match_array(["No properties to check."])
+      expect(result[:messages]).to match_array(["No variables to check."])
     end
   end
 
-  context "with FrontMatterPropertyIsNotDuplicate checking description and image" do
-    pre_commit_config = {"check" => "FrontMatterPropertyIsNotDuplicate", "properties" => ["description", "image"]}
+  context "with FrontMatterVariableIsNotDuplicate checking description and image" do
+    pre_commit_config = {"check" => "FrontMatterVariableIsNotDuplicate", "variables" => ["description", "image"]}
     let(:site) { build_site({ 'pre-commit' => [pre_commit_config] }) }
 
     it "fails if a staged post has a unique image, but duplicate description" do
@@ -171,7 +171,7 @@ describe(Jekyll::PreCommit::Runner) do
 
   context "with a check that doesn't exist and a check that does" do
     pre_commit_config = [
-      {"check" => "FrontMatterPropertyExists", "properties" => ["description"]},
+      {"check" => "FrontMatterVariableExists", "variables" => ["description"]},
       {"check" => "Garbage"}
     ]
     let(:site) { build_site({ 'pre-commit' => pre_commit_config }) }
