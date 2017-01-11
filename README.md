@@ -12,7 +12,7 @@ Add this line to your `Gemfile`:
 
 ```ruby
 group :jekyll_plugins do
-  gem 'jekyll-migrate-permalink'
+  gem 'jekyll-pre-commit'
 end
 ```
 
