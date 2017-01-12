@@ -1,6 +1,6 @@
 # jekyll-pre-commit
 
-[![Gem Version](https://badge.fury.io/rb/jekyll-pre-commit.svg)](https://badge.fury.io/rb/jekyll-pre-commit)
+[![Build Status](https://travis-ci.org/mpchadwick/jekyll-pre-commit.svg?branch=master)](https://travis-ci.org/mpchadwick/jekyll-pre-commit) [![Gem Version](https://badge.fury.io/rb/jekyll-pre-commit.svg)](https://badge.fury.io/rb/jekyll-pre-commit)
 
 A Jekyll plugin to make sure your post is _really_ ready for publishing.
 
