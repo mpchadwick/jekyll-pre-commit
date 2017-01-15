@@ -7,7 +7,7 @@ module Jekyll
           staged.each do |post|
             rendered = Jekyll::Renderer.new(site, post).run
             rendered.gsub!('"', '\"')
-            mispells = `echo "#{rendered}" | aspell list -H --add-html-skip=pre --add-html-skip=code`
+            mispells = `echo "#{rendered}" | sed "s/’/'/g" | aspell list -H --add-html-skip=pre --add-html-skip=code`
             puts mispells
           end
           exit 1
