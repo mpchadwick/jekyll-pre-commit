@@ -182,6 +182,29 @@ describe(Jekyll::PreCommit::Runner) do
     end
   end
 
+  context "with NoDuplicateTags" do
+    pre_commit_config = {"check" => "NoDuplicateTags"}
+    let(:site) { build_site({ 'pre-commit' => [pre_commit_config] }) }
+
+    it "passes if a staged post has no tags" do
+      result = runner.run(site, ["spec/fixtures/_posts/2017-01-06-description-is-too-long.md"])
+      expect(result[:ok]).to eql(true)
+      expect(result[:messages]).to match_array([])
+    end
+
+    it "passes if a staged post has tags, but no duplicated" do
+      result = runner.run(site, ["spec/fixtures/_posts/2017-07-24-has-unique-tags.md"])
+      expect(result[:ok]).to eql(true)
+      expect(result[:messages]).to match_array([])
+    end
+
+    it "fails if a staged post has duplicate tags" do
+      result = runner.run(site, ["spec/fixtures/_posts/2017-07-24-duplicate-tags-2.md"])
+      expect(result[:ok]).to eql(false)
+      expect(result[:messages]).to match_array(["duplicate appears to be duplicated in _posts/2017-07-24-duplicate-tags-1.md!"])
+    end
+  end
+
   context "with a check that doesn't exist" do
     pre_commit_config = {"check" => "Garbage"}
     let(:site) { build_site({ 'pre-commit' => [pre_commit_config] }) }
