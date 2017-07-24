@@ -36,6 +36,7 @@ pre-commit:
     variables: ['description']
   - check: FrontMatterVariableMeetsLengthRequirements
     variables: ['description', 'title']
+  - check: NoDuplicateTags
 ```
 
 ## Available Checks
@@ -75,6 +76,10 @@ For example...
 ```
 
 In the above, there would be a maximum length of 50 characters for the title (rather than the default of 59)
+
+#### NoDuplicateTags
+
+Checks that you have not accidentally introduced a duplicate tag. For example, if you have posts that are already using "MySQL" as a tag and you attempt to commit a post with the tag "mysql"  (notice the difference in case-sensitivity) you will not be allowed to commit.
 
 ## Roll Your Own
 
