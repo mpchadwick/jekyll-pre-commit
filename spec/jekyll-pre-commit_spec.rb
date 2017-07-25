@@ -201,7 +201,7 @@ describe(Jekyll::PreCommit::Runner) do
     it "fails if a staged post has duplicate tags" do
       result = runner.run(site, ["spec/fixtures/_posts/2017-07-24-duplicate-tags-2.md"])
       expect(result[:ok]).to eql(false)
-      expect(result[:messages]).to match_array(["duplicate appears to be duplicated in _posts/2017-07-24-duplicate-tags-1.md!"])
+      expect(result[:messages]).to match_array(["The tag 'duplicate' appears to be duplicated and is listed as 'Duplicate' in _posts/2017-07-24-duplicate-tags-1.md. "])
     end
   end
 

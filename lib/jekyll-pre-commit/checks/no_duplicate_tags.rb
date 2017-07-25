@@ -14,7 +14,9 @@ module Jekyll
 
                 n = Jekyll::Utils.slugify(tag)
                 if !normalized[n]
-                  normalized[n] = post.relative_path
+                  normalized[n] = Hash.new
+                  normalized[n]["path"] = post.relative_path
+                  normalized[n]["tag"] = tag
                 end
               end
             end
@@ -27,7 +29,7 @@ module Jekyll
 
                 if normalized[n] && !raw[tag]
                   @result[:ok] = false
-                  @result[:message] += "#{tag} appears to be duplicated in #{normalized[n]}!"
+                  @result[:message] += "The tag '#{tag}' appears to be duplicated and is listed as '#{normalized[n]["tag"]}' in #{normalized[n]["path"]}. "
                 end
               end
             end
