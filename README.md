@@ -39,6 +39,8 @@ pre-commit:
   - check: NoDuplicateTags
 ```
 
+**NOTE:** Depending on your configuration, you may need use `bundle exec git commit` to ensure Ruby libraries are properly loaded to run the pre-commit checks.
+
 ## Available Checks
 
 #### FrontMatterVariableExists
