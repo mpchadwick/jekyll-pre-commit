@@ -81,6 +81,10 @@ In the above, there would be a maximum length of 50 characters for the title (ra
 
 Checks that you have not accidentally introduced a duplicate tag. For example, if you have posts that are already using "MySQL" as a tag and you attempt to commit a post with the tag "mysql"  (notice the difference in case-sensitivity) you will not be allowed to commit.
 
+#### NoTodos
+
+This check ensures that you haven't left and "todos" in your post. It does so by doing a case-insensitive check against the entire post content for the string "todo".
+
 ## Roll Your Own
 
 You can also add your own checks. To do so, create a class in the `Jekyll::PreCommit::Checks` module and and define a `check` method. Your class should extend the `Jekyll::PreCommit::Checks::Check` class and return the `@result` instance variable. 
